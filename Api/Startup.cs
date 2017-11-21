@@ -29,6 +29,9 @@ namespace Api
             services.AddDbContext<SensorContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddTransient<ISensorContext, SensorContext>();
+            services.AddTransient<ISensorService, SensorService>();
+
             services.AddMvc();
         }
 

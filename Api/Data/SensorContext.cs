@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using Api.Data.Entities;
+﻿using Api.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Data
@@ -7,7 +6,7 @@ namespace Api.Data
     public class SensorContext : DbContext, ISensorContext
     {
         public SensorContext(DbContextOptions<SensorContext> options)
-            :base(options)
+            : base(options)
         {
         }
 
