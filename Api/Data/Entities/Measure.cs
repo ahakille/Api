@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Api.Data
+namespace Api.Data.Entities
 {
     public class Measure
     {
