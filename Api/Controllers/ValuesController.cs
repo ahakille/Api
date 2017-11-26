@@ -3,17 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal;
 
 namespace Api.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        private readonly ISensorService _sensorservice;
-        public ValuesController (ISensorService sensorService)
+        private readonly ISensorService _sensorService;
+
+        public ValuesController(ISensorService sensorService)
         {
-            _sensorservice = sensorService;
+            _sensorService = sensorService;
         }
+
+        // GET api/values/sensors
+        [HttpGet("sensors")]
+        public async Task<IActionResult> GetAllSensors()
+        {
+            var sensors = await _sensorService.GetAllSensors();
+
+            if (sensors != null)
+            {
+                return Ok(sensors);
+            }
+
+            return BadRequest("Unable to get sensors, they have probably taken over your house by now....");
+        }
+
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
