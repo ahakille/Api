@@ -29,6 +29,7 @@ namespace Api.Data
             measure.Property(m => m.SensorId).IsRequired();
             measure.Property(m => m.SensorData).IsRequired().HasMaxLength(250);
             measure.Property(m => m.TimeStamp).IsRequired();
+
         }
     }
 }
