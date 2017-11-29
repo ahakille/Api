@@ -72,7 +72,7 @@ namespace Api.Controllers
                 return Ok(sensor);
             }
 
-            return BadRequest("Unable to get sensors, they have probably taken over your house by now....");
+            return BadRequest("Unable to update, try more to the left... ");
         }
 
         // PUT api/values/5
