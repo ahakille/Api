@@ -40,15 +40,39 @@ namespace Api.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> GetSensor(int id)
         {
-            return "value";
+            var sensor = await _sensorService.GetSensor(id);
+            if (sensor != null)
+            {
+                return Ok(sensor);
+            }
+
+            return BadRequest("Unable to get sensors, they have probably taken over your house by now....");
+        }
+        [HttpGet("sensor/{id}")]
+        public async Task<IActionResult> GetMeasurementsForSensor(int id)
+        {
+            var sensor = await _sensorService.GetMeasurementsForSensor(id);
+            if (sensor != null)
+            {
+                return Ok(sensor);
+            }
+
+            return BadRequest("Unable to get sensors, they have probably taken over your house by now....");
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<IActionResult> Post([FromQuery] int sensorId, string sensorData)
         {
+            var sensor = await _sensorService.SetMeasure(sensorId,sensorData,DateTime.Now);
+            if (sensor != null)
+            {
+                return Ok(sensor);
+            }
+
+            return BadRequest("Unable to get sensors, they have probably taken over your house by now....");
         }
 
         // PUT api/values/5

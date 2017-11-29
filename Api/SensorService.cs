@@ -64,5 +64,13 @@ namespace Api
 
             return measure;
         }
+        public async Task<Measure> SetMeasure(int sensorId, string sensorData, DateTime timeStamp)
+        {
+            var m = await _sensorContext.Measurements
+                .AddAsync(new Measure { SensorId = sensorId , SensorData = sensorData , TimeStamp = timeStamp });
+            // HUR FAN SPARAR MAN????? 
+                   
+            return null;
+        }
     }
 }
