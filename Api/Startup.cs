@@ -32,6 +32,8 @@ namespace Api
             services.AddTransient<ISensorContext, SensorContext>();
             services.AddTransient<ISensorService, SensorService>();
 
+            services.AddSingleton<IConfiguration>(Configuration);
+
             services.AddMvc();
         }
 
