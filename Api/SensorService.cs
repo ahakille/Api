@@ -10,67 +10,66 @@ namespace Api
 {
     public class SensorService : ISensorService
     {
-        private readonly ISensorContext _sensorContext;
+        private readonly SensorContext _sensorContext;
 
-        public SensorService(ISensorContext sensorContext)
+        public SensorService(SensorContext sensorContext)
         {
             _sensorContext = sensorContext;
         }
 
         public async Task<IEnumerable<Sensor>> GetAllSensors()
         {
-            var allSensors = await _sensorContext.Sensors.ToListAsync();
-
-            return allSensors;
+            return await _sensorContext.Sensors.ToListAsync();
         }
 
         public async Task<Sensor> GetSensor(int sensorId)
         {
-            var sensor = await _sensorContext.Sensors.FirstOrDefaultAsync(
+            return await _sensorContext.Sensors.FirstOrDefaultAsync(
                 x => x.SensorId == sensorId);
-
-            return sensor;
         }
 
         public async Task<IEnumerable<Measure>> GetMeasurements()
         {
-            var measurements = await _sensorContext.Measurements.ToListAsync();
-
-            return measurements;
+            return await _sensorContext.Measurements.ToListAsync();            
         }
 
         public async Task<IEnumerable<Measure>> GetMeasurements(DateTime start, DateTime end)
         {
-            var measurements = await _sensorContext.Measurements
+            return await _sensorContext.Measurements
                 .Where(x => x.TimeStamp >= start && x.TimeStamp <= end)
                 .ToListAsync();
-
-            return measurements;
         }
 
         public async Task<IEnumerable<Measure>> GetMeasurementsForSensor(int sensorId)
         {
-            var measurements = await _sensorContext.Measurements
+            return await _sensorContext.Measurements
                 .Where(x => x.SensorId == sensorId)
                 .ToListAsync();
-
-            return measurements;
         }
 
         public async Task<Measure> GetMeasure(int measureId)
         {
-            var measure = await _sensorContext.Measurements
+            return await _sensorContext.Measurements
                 .FirstOrDefaultAsync(x => x.MeasureId == measureId);
-
-            return measure;
         }
-        public async Task<Measure> SetMeasure(int sensorId, string sensorData, DateTime timeStamp)
+        public async Task<int?> SetMeasure(int sensorId, string sensorData, DateTime timeStamp)
         {
-            var m = await _sensorContext.Measurements
-                .AddAsync(new Measure { SensorId = sensorId , SensorData = sensorData , TimeStamp = timeStamp });
-            // HUR FAN SPARAR MAN????? 
-                   
-            return null;
+            await _sensorContext.Measurements
+                .AddAsync(new Measure
+                {
+                    SensorId = sensorId,
+                    SensorData = sensorData,
+                    TimeStamp = timeStamp
+                });
+
+            var response = await _sensorContext.SaveChangesAsync();
+
+            if (response != 0)
+            {
+                return null;
+            }
+
+            return response;
         }
     }
 }

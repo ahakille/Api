@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal;
 using Microsoft.Extensions.Configuration;
 
 namespace Api.Controllers
@@ -14,12 +12,12 @@ namespace Api.Controllers
         private readonly ISensorService _sensorService;
         private readonly IConfiguration _iconfiguration;
 
-        public ValuesController(ISensorService sensorService,IConfiguration iconfiguration)
+        public ValuesController(ISensorService sensorService, IConfiguration iconfiguration)
         {
             _sensorService = sensorService;
             _iconfiguration = iconfiguration;
         }
-       
+
 
         // GET api/values/sensors
         [HttpGet("sensors")]
@@ -39,7 +37,7 @@ namespace Api.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new[] { "value1", "value2" };
         }
 
         // GET api/values/5
@@ -68,16 +66,18 @@ namespace Api.Controllers
 
         // POST api/values
         [HttpPost]
-        public async Task<IActionResult> Post([FromQuery] string key,int sensorId, string sensorData)
+        public async Task<IActionResult> Post([FromQuery] string key, int sensorId, string sensorData)
         {
             if (key != _iconfiguration["SecureKey"])
             {
                 return Unauthorized();
             }
-            var sensor = await _sensorService.SetMeasure(sensorId,sensorData,DateTime.Now);
+
+            var sensor = await _sensorService.SetMeasure(sensorId, sensorData, DateTime.Now);
+
             if (sensor != null)
             {
-                return Ok(sensor);
+                return Ok();
             }
 
             return BadRequest("Unable to update, try more to the left... ");
