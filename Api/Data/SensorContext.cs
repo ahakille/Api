@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Data
 {
-    public class SensorContext : DbContext, ISensorContext
+    public class SensorContext : DbContext
     {
         public SensorContext(DbContextOptions<SensorContext> options)
             : base(options)
