@@ -75,7 +75,7 @@ namespace Api.Controllers
 
             var sensor = await _sensorService.SetMeasure(sensorId, sensorData, DateTime.Now);
 
-            if (sensor != null)
+            if (sensor > 0)
             {
                 return Ok();
             }

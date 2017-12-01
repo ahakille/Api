@@ -64,11 +64,6 @@ namespace Api
 
             var response = await _sensorContext.SaveChangesAsync();
 
-            if (response != 0)
-            {
-                return null;
-            }
-
             return response;
         }
     }
