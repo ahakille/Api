@@ -65,7 +65,7 @@ namespace Api.Controllers
         }
 
         // POST api/values
-        [HttpPost]
+        [HttpGet("post")]
         public async Task<IActionResult> Post([FromQuery] string key, int sensorId, string sensorData)
         {
             if (key != _iconfiguration["SecureKey"])
