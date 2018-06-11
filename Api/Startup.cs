@@ -31,7 +31,7 @@ namespace Api
             services.AddDbContext<SensorContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddTransient<ISensorContext, SensorContext>();
+            services.AddTransient<SensorContext>();
             services.AddTransient<ISensorService, SensorService>();
 
             services.AddCors(options =>
@@ -50,6 +50,8 @@ namespace Api
             {
                 options.Filters.Add(new CorsAuthorizationFilterFactory("AllowAll"));
             });
+
+            services.AddSingleton<IConfiguration>(Configuration);
 
             services.AddMvc();
         }
