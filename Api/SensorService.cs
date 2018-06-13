@@ -33,10 +33,10 @@ namespace Api
             return await _sensorContext.Measurements.ToListAsync();            
         }
 
-        public async Task<IEnumerable<Measure>> GetMeasurements(DateTime start, DateTime end)
+        public async Task<IEnumerable<Measure>> GetMeasurements(DateTime start, DateTime end, int sensorId)
         {
             return await _sensorContext.Measurements
-                .Where(x => x.TimeStamp >= start && x.TimeStamp <= end)
+                .Where(x => (x.TimeStamp >= start && x.TimeStamp <= end)&& x.SensorId == sensorId)
                 .ToListAsync();
         }
 

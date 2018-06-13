@@ -63,6 +63,17 @@ namespace Api.Controllers
 
             return BadRequest("Unable to get sensors, they have probably taken over your house by now....");
         }
+        [HttpGet("sensor/time/{id}")]
+        public async Task<IActionResult> GetMeasurementsForSensorTime(int id)
+        {
+            var sensor = await _sensorService.GetMeasurementsForSensor(id);
+            if (sensor != null)
+            {
+                return Ok(sensor);
+            }
+
+            return BadRequest("Unable to get sensors, they have probably taken over your house by now....");
+        }
 
         // POST api/values
         [HttpGet("post")]
