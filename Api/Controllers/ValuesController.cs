@@ -33,13 +33,6 @@ namespace Api.Controllers
             return BadRequest("Unable to get sensors, they have probably taken over your house by now....");
         }
 
-        // GET api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new[] { "value1", "value2" };
-        }
-
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetSensor(int id)
@@ -64,9 +57,18 @@ namespace Api.Controllers
             return BadRequest("Unable to get sensors, they have probably taken over your house by now....");
         }
         [HttpGet("sensor/time/{id}")]
-        public async Task<IActionResult> GetMeasurementsForSensorTime(int id)
+        public async Task<IActionResult> GetMeasurementsForSensorTime(int id, DateTime? startTime , DateTime? endTime)
         {
-            var sensor = await _sensorService.GetMeasurementsForSensor(id);
+            
+            if(!startTime.HasValue)
+            {
+                startTime = DateTime.Now.AddDays(-1);
+            }
+            if(!endTime.HasValue)
+            {
+                endTime = DateTime.Now;
+            }
+            var sensor = await _sensorService.GetMeasurementsWithTimeAndId(startTime,endTime,id);
             if (sensor != null)
             {
                 return Ok(sensor);
@@ -94,16 +96,5 @@ namespace Api.Controllers
             return BadRequest("Unable to update, try more to the left... ");
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

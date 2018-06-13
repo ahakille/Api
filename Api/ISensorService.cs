@@ -11,7 +11,7 @@ namespace Api
         Task<IEnumerable<Sensor>> GetAllSensors();
         Task<Sensor> GetSensor(int sensorId);
         Task<IEnumerable<Measure>> GetMeasurements();
-        Task<IEnumerable<Measure>> GetMeasurements(DateTime start, DateTime end);
+        Task<IEnumerable<Measure>> GetMeasurementsWithTimeAndId(DateTime? start, DateTime? end, int sensorId);
         Task<IEnumerable<Measure>> GetMeasurementsForSensor(int sensorId);
         Task<Measure> GetMeasure(int measureId);
         Task<int?> SetMeasure(int sensorId, string sensorData, DateTime timeStamp);
